@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>פורים עם משמעות 2024</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <style>
+    /* Optional: Add custom styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    #top-right {
+            position: fixed;
+            top: 0px;
+            right: 10px;
+        }
+
+        #top-left {
+            position: fixed;
+            top: 0px;
+            left: 10px;
+        }
+    .form-wrapper {
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: right;
+    }
+    .form-title {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .form-submit {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  .logo {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .logo img {
+    max-width: 200px;
+    height: auto;
+    border-radius: 10%;
+    box-shadow: 8px 9px 10px 0px rgba(0, 0, 0, 0.5);
+
+  }
+    .event-info {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-step {
+      display: none;
+    }
+    .form-step.active {
+      display: block;
+    }
+.my-table-class {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.my-table-class th,
+.my-table-class td {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.my-table-class th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.my-table-class tr:hover {
+  background-color: #f5f5f5;
+}
+.my-table-class2 tr > * {
+    display: block;
+}
+
+.my-table-class2 tr {
+    display: table-cell;
+    vertical-align: top;
+}
+.my-table-class2 {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.my-table-class2 th,
+.my-table-class2 td {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.my-table-class2 th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.my-table-class2 tr:hover {
+  background-color: #f5f5f5;
+}
+.center-table {
+  margin: 0 auto;
+
+}
+.center-table th,
+.center-table td {
+  padding: 10px;
+}
+.h4,
+h4 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  padding: 10px;
+  background-color: #6ed67e;
+  border-bottom: 1px solid #ccc;
+  border-radius: 3%;
+}
+
+.h4::before,
+h4::before {
+  content: "\f073";
+  font-family: "Font Awesome 5 Free";
+  display: inline-block;
+  margin-right: 10px;
+}
+#email-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #email-icon img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+  </style>
+  <script>
+    // Function to handle the form submission
+    function handleSubmit(event) {
+      event.preventDefault();
+      
+      const email = document.getElementById('email').value;
+            const alertMessage = document.getElementById('alert-message');
+            alertMessage.innerHTML = '<div class="alert alert-success" role="alert">נשלחה הודעת אישור אימות לטימס<br>המערכת מחכה לאישור או דחייה<br>לא לרענן את הדף!</div>';
+      // Call the API to check if the user is valid
+      // Replace 'apiEndpoint' with the actual API endpoint URL
+      fetch('https://prod-143.westeurope.logic.azure.com:443/workflows/7e1d644468b14fc68c2e1d92c4c7e7bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=bMY-O_icO8iF1Ozhl9Ys6J54KWwcfnduc4oNPME0iJA', {
+        method: 'POST',
+        body: JSON.stringify({ email ,step: "1"  }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.status === 200) {
+          // If the response is 202, show the next step
+          response.json().then(data => {
+          showStep(2);
+           const registerDetails = document.getElementById('rergisterdetails3');
+          // Create the table element
+          const table = document.createElement('table');
+          table.classList.add('my-table-class2'); // Add your CSS class to the table
+
+          // Create the table header row
+          const headerRow = document.createElement('tr');
+          for (const key in data) {
+            const th = document.createElement('th');
+            th.textContent = key;
+            headerRow.appendChild(th);
+          }
+          table.appendChild(headerRow);
+
+          // Create the table data rows
+          const dataRow = document.createElement('tr');
+          for (const key in data) {
+            const td = document.createElement('td');
+            td.textContent = data[key];
+            dataRow.appendChild(td);
+          }
+          table.appendChild(dataRow);
+
+          registerDetails.appendChild(table);
+        });
+          alertMessage.innerHTML = '<div class="alert alert-success" role="alert">משתמש נמצא במערכת</div>';
+        } else if (response.status === 204) {
+        // If the response is 204, show the declined request alert
+        alertMessage.innerHTML = '<div class="alert alert-warning" role="alert">משתמש דחה את הבקשה!</div>';
+        }else if (response.status === 209) {
+        // If the response is 204, show the declined request alert
+        alertMessage.innerHTML = '<div class="alert alert-warning" role="alert">משתמש כבר רשום במערכת!</div>';
+        }
+         else {
+          // Handle other response statuses
+          alertMessage.innerHTML = '<div class="alert alert-danger" role="alert">מצטערים...נראה שהאימייל לא קיים במערכת</div>';
+          console.log('User is not valid');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
+    // Function to show a specific step of the form
+    function showStep(step) {
+      const steps = document.getElementsByClassName('form-step');
+      for (let i = 0; i < steps.length; i++) {
+        steps[i].classList.remove('active');
+      }
+      steps[step - 1].classList.add('active');
+    }
+    
+        // Function to handle the form submission
+   function handleSubmit2(event) {
+  event.preventDefault();
+
+  const email = document.getElementById('email').value;
+  const alertMessage = document.getElementById('alert-message');
+  alertMessage.style.display = 'none';
+
+  // Call the API to check if the user is valid
+  fetch('https://prod-143.westeurope.logic.azure.com:443/workflows/7e1d644468b14fc68c2e1d92c4c7e7bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=bMY-O_icO8iF1Ozhl9Ys6J54KWwcfnduc4oNPME0iJA', {
+    method: 'POST',
+    body: JSON.stringify({ email, step: "2" }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response => {
+      if (response.status === 202) {
+        // If the response is 202, show the response data
+        response.json().then(data => {
+          showStep(3);
+           const registerDetails = document.getElementById('rergisterdetails');
+          // Create the table element
+          const table = document.createElement('table');
+          table.classList.add('my-table-class'); // Add your CSS class to the table
+
+          // Create the table header row
+          const headerRow = document.createElement('tr');
+          for (const key in data) {
+            const th = document.createElement('th');
+            th.textContent = key;
+            headerRow.appendChild(th);
+          }
+          table.appendChild(headerRow);
+
+          // Create the table data rows
+          const dataRow = document.createElement('tr');
+          for (const key in data) {
+            const td = document.createElement('td');
+            td.textContent = data[key];
+            dataRow.appendChild(td);
+          }
+          table.appendChild(dataRow);
+
+          registerDetails.appendChild(table);
+        });
+      } else {
+        // If the response status is not 202, show an error
+        alertMessage.innerHTML = '<div class="alert alert-danger" role="alert">Error: Failed to process the request!</div>';
+        console.log('Error: Failed to process the request');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
+  // Proceed to the next step
+  
+}
+  </script>
+</head>
+<body>
+    <p id="top-right">בס"ד</p>
+    <p id="top-left">בעז"ה יחד ננצח!</p>
+    <div id="email-icon">
+        <a href="roei.redler@abra-it.com?subject=%D7%A2%D7%96%D7%A8%D7%94%20%D7%91%D7%A8%D7%99%D7%A9%D7%95%D7%9D%20%D7%9C%D7%90%D7%99%D7%A8%D7%95%D7%A2%20%22%D7%A4%D7%95%D7%A8%D7%99%D7%9D%20%D7%A2%D7%9D%20%D7%9E%D7%A9%D7%9E%D7%A2%D7%95%D7%AA%202024%22&body=%D7%94%D7%99%D7%99%20%D7%A8%D7%95%D7%90%D7%99%2C%20%D7%94%D7%A1%D7%AA%D7%91%D7%9B%D7%AA%D7%99%20%D7%A2%D7%9D%20%D7%93%D7%A3%20%D7%94%D7%A8%D7%99%D7%A9%D7%95%D7%9D.%0A%0A%D7%A0.%D7%91%0A%D7%A0%D7%99%D7%A1%D7%99%D7%AA%D7%99%20%D7%9C%D7%A8%D7%A2%D7%A0%D7%9F%20%D7%90%D7%AA%20%D7%94%D7%93%D7%A3%20%D7%95%D7%96%D7%94%20%D7%9C%D7%90%20%D7%A4%D7%AA%D7%A8%20%D7%90%D7%AA%20%D7%94%D7%91%D7%A2%D7%99%D7%94">
+            <i class="fas fa-envelope"></i>
+            <span>לתמיכה, שלחו לי דוא"ל</span>
+        </a>
+    </div>
+  <div class="container">
+    <div class="form-wrapper">
+      <div class="logo">
+        <img src="https://cloud.abra.page/wp-content/uploads/2022/08/Abra-Symbol-Dark-BG.jpg" alt="Logo">
+      </div>
+      <h2 class="form-title">הרשמה לאירוע</h2>
+      <div class="event-info">
+        <h3>פורים עם משמעות</h3>
+        <table class="center-table" style="border-collapse: collapse; text-align: center;">
+            <tr>
+              <th style="border: none; font-weight: normal;">תאריך:</th>
+              <td style="border: none;">19/03/2024</td>
+            </tr>
+            <tr>
+              <th style="border: none; font-weight: normal;">מיקום:</th>
+              <td style="border: none;">רעננה</td>
+            </tr>
+              <tr>
+              <th style="border: none; font-weight: normal;">משתתפים:</th>
+              <td style="border: none;">מחלקת CRM פתרונות מיקרסופט</td>
+            </tr>
+          </table>
+      </div>
+      <form onsubmit="handleSubmit(event)" class="form-step active">
+        <div class="form-group">
+          <label for="email">כתובת אימייל:</label>
+          <input type="email" id="email" name="email" class="form-control" placeholder="הכנס כתובת אימייל תקינה של עובד Abra" required>
+        </div>
+        <button type="submit" class="btn btn-primary form-submit">שליחת אימות</button>
+      </form>
+      <form onsubmit="handleSubmit2(event)" class="form-step">
+        <h2 class="form-title">אימות פרטים</h2>
+        <div class="rergister-details3" id="rergisterdetails3"></div>
+        <button type="submit" class="btn btn-primary form-submit">מאשר/ת! תרשום אותי :)</button>
+      </form>
+            <form onsubmit="handleSubmit2(event)" class="form-step">
+        <h2 class="form-title">תודה רבה שנרשמת</h2>
+        <div class="rergister-details" id="rergisterdetails"></div>
+        <h4 class="form-title"> מייל אישור הרשמה + זימון לאירוע נשלחו אלייך ברגע זה!</h4>
+      </form>
+      <br><div id="alert-message"></div>
+    </div>
+  </div>
+</body>
+</html>
